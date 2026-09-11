@@ -1,0 +1,26 @@
+:root {
+  --c0: #fff2df;
+  --c1: #ef243a;
+}
+
+.p {
+  padding: 2px;
+  width: fit-content;
+  background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
+  background-size: 2px 2px;
+}
+
+body {
+  margin: 0 1rem;
+  /* leave room above the robot svg for its upward float animation */
+  padding-top: 3rem;
+  background-color: var(--c0);
+}
+svg.i {
+  height: 2rem;
+  fill: var(--c1);
+}
+svg.ii {
+  height: 2rem;
+  fill: var(--c0);
+}
