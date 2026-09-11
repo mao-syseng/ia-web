@@ -3,9 +3,14 @@
   --c1: #ef243a;
 }
 
-.p {
-  padding: 2px;
+.top-logo {
+  top: 8px;
+  position: absolute;
+  padding: 4px 4px 0 4px;
   width: fit-content;
+}
+
+.p {
   background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
   background-size: 2px 2px;
 }
@@ -13,8 +18,10 @@
 body {
   margin: 0 1rem;
   /* leave room above the robot svg for its upward float animation */
-  padding-top: 3rem;
+  padding-top: 3.5rem;
   background-color: var(--c0);
+  font-family: "Iosevka Charon", monospace;
+  color: var(--c1);
 }
 svg.i {
   height: 2rem;
