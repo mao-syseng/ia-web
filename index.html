@@ -1,37 +1,53 @@
 <!doctype html>
-<html lang="dk">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --c0: #ffe2db;
+        --c1: #d9a7c6;
+        --c2: #8d89c7;
+        --c3: #755f9c;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/style.css" />
-  <title>iå.dk</title>
-</head>
+      body {
+        margin: 0;
+        background-color: var(--c3);
 
-<body>
-  <main class="container">
-    <hgroup>
-      <h1>iå.dk</h1>
-      <p>lidt tilfældige små projekter og sider</p>
-    </hgroup>
-    <ul>
-      <li><a href="4.html">matematik zine</a></li>
-      <li><a href="5.html">stave zine</a></li>
-      <li><a href="1.html">unicode symboler</a></li>
-      <li><a href="k.html">kalorie tæller</a></li>
-      <li><a href="https://ternary-totalistic-ca-hub.netlify.app/">ternary totalistic elementary cellular automata</a>
-      </li>
-    </ul>
-    <footer>
-      <br>
-      <hr>
-      <small>
-        • bygget med <a href="https://picocss.com">pico</a> • kontakt mig på
-        <a href="mailto:m@moy.dk">m@moy.dk</a> • flere web doodles på <a href="https://moy.dk/">moy.dk</a> • <a
-          href="https://www.obelphotography.dk/">søster side</a>
-      </small>
-    </footer>
-  </main>
-</body>
-
+        opacity: 0.8;
+        background-image:
+          linear-gradient(#8d89c7 1.6px, transparent 1.6px),
+          linear-gradient(90deg, #8d89c7 1.6px, transparent 1.6px),
+          linear-gradient(#8d89c7 0.8px, transparent 0.8px),
+          linear-gradient(90deg, #8d89c7 0.8px, #755f9c 0.8px);
+        background-size:
+          80px 80px,
+          80px 80px,
+          16px 16px,
+          16px 16px;
+        background-position:
+          -1.6px -1.6px,
+          -1.6px -1.6px,
+          -0.8px -0.8px,
+          -0.8px -0.8px;
+      }
+      svg.i {
+        height: 2rem;
+        height: 2rem;
+        fill: var(--c0);
+      }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>iå</title>
+  </head>
+  <body class="container">
+    <div class="grid">
+      <svg class="i" viewBox="0 0 5 5">
+        <path
+          d="M0 1h1v1H0zM3 4h1v1H3zM4 2h1v3H4zM2 3h1v2H2zM0 3h1v2H0zM3 2h1v1H3zM3 0h1v1H3z"
+        />
+      </svg>
+    </div>
+  </body>
 </html>
