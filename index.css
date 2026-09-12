@@ -144,6 +144,7 @@ body {
   padding-top: 3.5rem;
   background-color: var(--c0);
   font-family: "Iosevka Charon", monospace;
+  font-weight: 500;
   color: var(--c1);
 }
 svg.i {
