@@ -3,7 +3,8 @@
   --c1: #ef243a;
 }
 
-:root:has(button:hover) {
+:root:has(button:hover),
+:root:has(svg:hover) {
   --c0: #ef243a;
   --c1: #fff2df;
 }
