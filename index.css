@@ -3,11 +3,40 @@
   --c1: #ef243a;
 }
 
+:root:has(button:hover) {
+  --c0: #ef243a;
+  --c1: #fff2df;
+}
+
 .top-logo {
   top: 8px;
   position: absolute;
   padding: 4px 4px 0 4px;
   width: fit-content;
+}
+
+main {
+  display: flex;
+}
+
+a {
+  color: var(--c0);
+  background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
+  background-size: 1px 1px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--c1);
+  background-color: var(--c0);
+  border: 1px solid var(--c1);
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 4rem;
 }
 
 .p {
@@ -30,4 +59,14 @@ svg.i {
 svg.ii {
   height: 2rem;
   fill: var(--c0);
+}
+
+#robot-full [fill="#FFF2DF" i],
+#robot-full [fill="#fff2df" i] {
+  fill: var(--c0);
+}
+
+#robot-full [fill="#EF243A" i],
+#robot-full [fill="#ef243a" i] {
+  fill: var(--c1);
 }

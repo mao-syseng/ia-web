@@ -1,12 +1,13 @@
-/* SVG viewports clip to the viewBox by default; allow the animated robot to bleed past it */
-svg:has(> #ia-robot-full) {
-  overflow: visible;
+#robot-full {
   display: block;
+  padding: 2rem 2rem 2rem 0;
   max-width: 80%;
   height: auto;
+  max-height: 50rem;
+  overflow: visible;
 }
 
-.robot-hover {
+#robot-hover {
   /* =========================================
      CONTROLS
      ========================================= */
