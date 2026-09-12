@@ -1,10 +1,14 @@
 #robot-full {
   display: block;
   padding: 2rem 2rem 2rem 0;
-  max-width: 80%;
+  /* fixed relative to the viewport so it keeps its size regardless of the
+     60/40 column split and is allowed to overflow into the text column */
+  width: 80vw;
+  max-width: 40rem;
   height: auto;
   max-height: 50rem;
   overflow: visible;
+  flex-shrink: 0;
 }
 
 #robot-hover {
