@@ -4,38 +4,22 @@
 }
 
 :root:has(button:hover),
-:root:has(svg:hover) {
+:root:has(.color-reverse:hover) {
   --c0: #ef243a;
   --c1: #fff2df;
 }
 
-p {
-  margin-top: 0.5rem;
-}
-
-main {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
-.top-squiggly {
-  position: absolute;
+body {
+  width: 100vw;
   margin: 0;
-  top: 0;
-  right: 0;
+  background-color: var(--c0);
+  font-family: "Iosevka Charon", monospace;
+  font-weight: 500;
+  color: var(--c1);
 }
 
-.robot-svg-wrap {
-  flex: 0 1 60%;
-  min-width: 0;
-  overflow: visible;
-}
-
-.ia {
-  font-family: "Bytesized", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+p {
+  margin-top: 0;
 }
 
 h1 {
@@ -46,6 +30,60 @@ a {
   color: var(--c0);
   background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
   background-size: 1px 1px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    padding: 0.5rem;
+  }
+}
+
+section {
+  padding: 0 1rem;
+}
+
+.section1 {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.section2 {
+  min-height: 20rem;
+  background: var(--c1);
+  color: var(--c0);
+}
+
+.section-divider {
+  width: 100%;
+  height: 1.5rem;
+  overflow: hidden;
+  background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
+  background-size: 2px 2px;
+}
+
+.robot-svg-wrap {
+  flex: 0 1 60%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.robot-text {
+  flex: 1 1 40%;
+  max-width: 40rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ia {
+  font-family: "Bytesized", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 button {
@@ -93,6 +131,41 @@ button:active {
   transform: scale(0.95);
 }
 
+.p {
+  background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
+  background-size: 2px 2px;
+}
+
+svg.i {
+  height: 2rem;
+  fill: var(--c1);
+}
+
+svg.ii {
+  height: 2rem;
+  fill: var(--c0);
+}
+
+footer {
+  margin-top: 8rem;
+  margin-bottom: 1rem;
+}
+
+#robot-full [fill="#FFF2DF" i],
+#robot-full [fill="#fff2df" i] {
+  fill: var(--c0);
+}
+
+#robot-full [fill="#EF243A" i],
+#robot-full [fill="#ef243a" i] {
+  fill: var(--c1);
+}
+
+#robot-full [stroke="#EF243A" i],
+#robot-full [stroke="#ef243a" i] {
+  stroke: var(--c1);
+}
+
 @keyframes fly-1 {
   0%,
   100% {
@@ -110,63 +183,4 @@ button:active {
   75% {
     transform: translate(-0.1em, 0);
   }
-}
-
-footer {
-  margin-top: 8rem;
-  margin-bottom: 1rem;
-}
-
-.top-logo {
-  top: 8px;
-  position: absolute;
-  padding: 4px 4px 0 4px;
-  width: fit-content;
-}
-
-.robot-text {
-  flex: 1 1 40%;
-  max-width: 40rem;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.p {
-  background: conic-gradient(red 25%, white 0 50%, red 0 75%, white 0);
-  background-size: 2px 2px;
-}
-
-body {
-  margin: 0 1rem;
-  /* leave room above the robot svg for its upward float animation */
-  padding-top: 3.5rem;
-  background-color: var(--c0);
-  font-family: "Iosevka Charon", monospace;
-  font-weight: 500;
-  color: var(--c1);
-}
-svg.i {
-  height: 2rem;
-  fill: var(--c1);
-}
-svg.ii {
-  height: 2rem;
-  fill: var(--c0);
-}
-
-#robot-full [fill="#FFF2DF" i],
-#robot-full [fill="#fff2df" i] {
-  fill: var(--c0);
-}
-
-#robot-full [fill="#EF243A" i],
-#robot-full [fill="#ef243a" i] {
-  fill: var(--c1);
-}
-
-#robot-full [stroke="#EF243A" i],
-#robot-full [stroke="#ef243a" i] {
-  stroke: var(--c1);
 }
