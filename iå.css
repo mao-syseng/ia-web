@@ -12,149 +12,85 @@
 }
 
 #robot-hover {
-  /* =========================================
-     CONTROLS
-     ========================================= */
-
   --robot-size: min(32vw, 8rem);
+  --animation-exaggeration: 2;
+  --jump-height: calc(var(--robot-size) * 0.5 * var(--animation-exaggeration));
 
-  /* Overall exaggeration */
-  --animation-exaggeration: 1.5;
-
-  /* How high the robot jumps */
-  --jump-height: calc(var(--robot-size) * 0.55 * var(--animation-exaggeration));
-
-  /*
-    ONLY controls position.
-    No rotation, no horizontal movement.
-  */
   animation: robot-jump 3.2s ease-in-out infinite;
-
   will-change: transform;
 }
 
 #robot {
-  /*
-    ONLY controls squash/stretch.
-  */
   transform-box: fill-box;
   transform-origin: center bottom;
-
   animation: robot-squash 3.2s ease-in-out infinite;
-
   will-change: transform;
 }
 
-/* =========================================
-   JUMP
-   ========================================= */
-
 @keyframes robot-jump {
-  /* Rest */
   0% {
     transform: translateY(0);
   }
-
-  /* Anticipation: push down slightly */
   12% {
     transform: translateY(calc(var(--robot-size) * 0.06));
   }
-
-  /* Launch */
   22% {
     transform: translateY(calc(var(--jump-height) * -0.45));
   }
-
-  /* Peak */
   38% {
     transform: translateY(calc(var(--jump-height) * -1));
   }
-
-  /* Start falling */
   55% {
     transform: translateY(calc(var(--jump-height) * -0.8));
   }
-
-  /* Landing */
   68% {
     transform: translateY(0);
   }
-
-  /* Small rebound */
   77% {
     transform: translateY(calc(var(--robot-size) * -0.04));
   }
-
-  /* Settle */
   88% {
     transform: translateY(0);
   }
-
-  /* Rest */
   100% {
     transform: translateY(0);
   }
 }
 
-/* =========================================
-   SQUASH & STRETCH
-   ========================================= */
-
 @keyframes robot-squash {
-  /* Rest */
   0% {
     transform: scaleX(1) scaleY(1);
   }
-
-  /* Anticipation squash */
   12% {
     transform: scaleX(calc(1 + 0.1 * var(--animation-exaggeration)))
       scaleY(calc(1 - 0.1 * var(--animation-exaggeration)));
   }
-
-  /* Stretch as it launches */
   22% {
     transform: scaleX(calc(1 - 0.04 * var(--animation-exaggeration)))
       scaleY(calc(1 + 0.08 * var(--animation-exaggeration)));
   }
-
-  /* Relax near the top */
   40% {
     transform: scaleX(1) scaleY(1);
   }
-
-  /* Slight stretch while falling */
   58% {
     transform: scaleX(calc(1 - 0.03 * var(--animation-exaggeration)))
       scaleY(calc(1 + 0.05 * var(--animation-exaggeration)));
   }
-
-  /* BIG landing squash */
   68% {
     transform: scaleX(calc(1 + 0.16 * var(--animation-exaggeration)))
       scaleY(calc(1 - 0.14 * var(--animation-exaggeration)));
   }
-
-  /* Rebound stretch */
   77% {
     transform: scaleX(calc(1 - 0.03 * var(--animation-exaggeration)))
       scaleY(calc(1 + 0.05 * var(--animation-exaggeration)));
   }
-
-  /* Settle */
   88% {
     transform: scaleX(1) scaleY(1);
   }
-
-  /* Rest */
   100% {
     transform: scaleX(1) scaleY(1);
   }
 }
-
-/* =========================================
-   REDUCED MOTION
-   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   #robot-hover,
