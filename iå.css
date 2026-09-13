@@ -16,14 +16,14 @@
   --animation-exaggeration: 2;
   --jump-height: calc(var(--robot-size) * 0.5 * var(--animation-exaggeration));
 
-  animation: robot-jump 2.8s ease-in-out infinite;
+  animation: robot-jump 2.4s ease-in-out infinite;
   will-change: transform;
 }
 
 #robot {
   transform-box: fill-box;
   transform-origin: center bottom;
-  animation: robot-squash 2.8s ease-in-out infinite;
+  animation: robot-squash 2.4s ease-in-out infinite;
   will-change: transform;
 }
 
