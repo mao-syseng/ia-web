@@ -17,7 +17,6 @@ import {
   UsersRound,
   Building2,
   Keyboard,
-  FlaskConical,
 } from "lucide-react";
 import { Collapsible } from "@base-ui/react/collapsible";
 
@@ -108,7 +107,15 @@ export function AppSidebar() {
                 }
               >
                 <div className="flex aspect-square size-8 items-center justify-center bg-sidebar-primary text-sidebar-primary-foreground">
-                  <FlaskConical className="size-4" />
+                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
+                    <rect y="1.8" width="1.8" height="1.8" fill="#fafafa" />
+                    <rect x="5.3999" y="7.2" width="1.8" height="1.8" fill="#fafafa" />
+                    <rect x="7.19995" y="3.6" width="1.8" height="5.4" fill="#fafafa" />
+                    <rect x="3.6001" y="5.4" width="1.8" height="3.6" fill="#fafafa" />
+                    <rect y="5.4" width="1.8" height="3.6" fill="#fafafa" />
+                    <rect x="5.3999" y="3.6" width="1.8" height="1.8" fill="#fafafa" />
+                    <rect x="5.3999" width="1.8" height="1.8" fill="#fafafa" />
+                  </svg>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{currentSave.name}</span>
