@@ -1,14 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { z } from "zod";
 import { getAllEmployees } from "@/employees";
 import { shuffle } from "remeda";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import ActionsCard from "@/components/ActionsCard";
+import ActionsCard, { type InitiativeKey } from "@/components/ActionsCard";
 import BusyEmployeesCard from "@/components/BusyEmployeesCard";
+import InitiativeCard from "@/components/InitiativeCard";
 
 const companySchema = z.object({
   // Only 2 actions per turn
-  usedAnAction: z.boolean().default(false),
+  actionsUsed: z.number().int().min(0).max(2).default(0),
   // Your "deck"
   employees: z
     .number()
@@ -28,6 +30,7 @@ const companySchema = z.object({
 });
 
 const currentProjectSchema = z.object({
+  projectStarted: z.boolean().default(false),
   turnCount: z.number().default(0),
   // Indicates whose turn it is
   currentTurn: z.enum(["company", "competitor"]).default("company"),
@@ -36,6 +39,30 @@ const currentProjectSchema = z.object({
   // Player 2 state
   competitor: companySchema.prefault({}),
 });
+
+function startTurn(company: z.infer<typeof companySchema>): z.infer<typeof companySchema> {
+  const availableIds = shuffle(company.employees).slice(
+    0,
+    Math.max(0, 5 - company.availableEmployees.length),
+  );
+
+  return {
+    ...company,
+    actionsUsed: 0,
+    employees: company.employees.filter((id) => !availableIds.includes(id)),
+    availableEmployees: [...company.availableEmployees, ...availableIds],
+  };
+}
+
+function takeAction(
+  project: z.infer<typeof currentProjectSchema>,
+): z.infer<typeof currentProjectSchema> {
+  const company = project[project.currentTurn];
+  return {
+    ...project,
+    [project.currentTurn]: { ...company, actionsUsed: Math.min(2, company.actionsUsed + 1) },
+  };
+}
 
 export const Route = createFileRoute("/")({
   validateSearch: currentProjectSchema,
@@ -224,19 +251,120 @@ function MockCards({ cards }: { cards: typeof mockCards }) {
 }
 
 export function RouteComponent() {
+  const router = useRouter();
+  const navigate = Route.useNavigate();
+  const project = Route.useSearch();
+  const { currentTurn, projectStarted, company, competitor } = project;
+  const currentCompany = currentTurn === "company" ? company : competitor;
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">("idle");
+
+  const copyTurnUrl = async () => {
+    if (currentCompany.actionsUsed < 2) return;
+
+    const nextTurn = currentTurn === "company" ? "competitor" : "company";
+    const location = router.buildLocation({
+      to: "/",
+      hash: window.location.hash.slice(1),
+      search: {
+        ...project,
+        currentTurn: nextTurn,
+        projectStarted: true,
+        turnCount: project.turnCount + 1,
+        [nextTurn]: startTurn(project[nextTurn]),
+      },
+    });
+
+    try {
+      await navigator.clipboard.writeText(new URL(location.href, window.location.href).href);
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("error");
+    }
+  };
+
+  const waitUntilNextQuarter = async () => {
+    await navigate({
+      search: (previous) => {
+        if (previous.projectStarted || previous.currentTurn !== currentTurn) return previous;
+
+        return {
+          ...previous,
+          projectStarted: true,
+          turnCount: previous.turnCount + 1,
+          [previous.currentTurn]: startTurn(previous[previous.currentTurn]),
+        };
+      },
+    });
+    setCopyStatus("idle");
+  };
+
+  const assignEmployees = (initiative: InitiativeKey, employeeIds: number[]) =>
+    navigate({
+      search: (previous) => {
+        if (!previous.projectStarted || previous.currentTurn !== currentTurn) return previous;
+
+        const company = previous[previous.currentTurn];
+        if (company.actionsUsed >= 2) return previous;
+        const assignedIds = company.availableEmployees.filter((id) => employeeIds.includes(id));
+        const capacity = {
+          initiativeOneEmployees: 25,
+          initiativeTwoEmployees: 35,
+          initiativeThreeEmployees: 45,
+        }[initiative];
+
+        if (
+          assignedIds.length === 0 ||
+          company[initiative].length + assignedIds.length > capacity
+        ) {
+          return previous;
+        }
+
+        return takeAction({
+          ...previous,
+          [currentTurn]: {
+            ...company,
+            availableEmployees: company.availableEmployees.filter(
+              (id) => !assignedIds.includes(id),
+            ),
+            [initiative]: [...company[initiative], ...assignedIds],
+          },
+        });
+      },
+    });
+
   return (
     <div className="px-6 py-2">
       {/* Each column stacks independently. JSX order controls the card order. */}
-      <div className="grid grid-cols-4 items-start gap-6">
+      <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 xl:grid-cols-4">
         <div className="flex min-w-0 flex-col gap-6">
           <BusyEmployeesCard />
           <MockCards cards={mockCards.slice(0, 3)} />
         </div>
         <div className="flex min-w-0 flex-col gap-6">
-          <ActionsCard />
+          <ActionsCard
+            key={`${currentTurn}-${project.turnCount}`}
+            currentTurn={currentTurn}
+            projectStarted={projectStarted}
+            copyStatus={copyStatus}
+            onCopyTurnUrl={copyTurnUrl}
+            onWaitUntilNextQuarter={waitUntilNextQuarter}
+            onAssign={assignEmployees}
+          />
           <MockCards cards={mockCards.slice(3, 8)} />
         </div>
         <div className="flex min-w-0 flex-col gap-6">
+          <InitiativeCard
+            title="Initiative 1"
+            employeeIds={currentCompany.initiativeOneEmployees}
+          />
+          <InitiativeCard
+            title="Initiative 2"
+            employeeIds={currentCompany.initiativeTwoEmployees}
+          />
+          <InitiativeCard
+            title="Initiative 3"
+            employeeIds={currentCompany.initiativeThreeEmployees}
+          />
           <MockCards cards={mockCards.slice(8, 13)} />
         </div>
         <div className="flex min-w-0 flex-col gap-6">

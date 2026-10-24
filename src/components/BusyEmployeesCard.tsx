@@ -1,47 +1,25 @@
-import { getEmployeesByIds } from "../employees"
-import { Link } from "@tanstack/react-router"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table"
-import { useCurrentCompany } from "@/hooks/useState"
+import { getEmployeesByIds } from "../employees";
+import { Link } from "@tanstack/react-router";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { useCurrentCompany } from "@/hooks/useState";
 
 const BusyEmployeesCard = () => {
-  const company = useCurrentCompany()
-  const employees = getEmployeesByIds(company.employees)
-  const availableEmployees = getEmployeesByIds(company.availableEmployees)
+  const company = useCurrentCompany();
+  const employees = getEmployeesByIds(company.employees);
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Busy Employees</CardTitle>
         <CardDescription>
-          These employees are currently busy and unavailable for new tasks
+          These employees are currently busy and unavailable for new tasks. New employees will be
+          available next quarter.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="max-h-90 overflow-y-auto">
         <Table>
-          <TableCaption>
-            {availableEmployees.length} of {employees.length} employees
-            available
-          </TableCaption>
-
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -75,28 +53,10 @@ const BusyEmployeesCard = () => {
               </TableRow>
             ))}
           </TableBody>
-
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={4}>Total Employees</TableCell>
-              <TableCell className="text-right">{employees.length}</TableCell>
-            </TableRow>
-          </TableFooter>
         </Table>
       </CardContent>
-
-      <CardFooter className="flex-col gap-2">
-        <Button
-          type="button"
-          className="w-full"
-          onClick={() => {}}
-          disabled={availableEmployees.length === 0}
-        >
-          Hire Employee
-        </Button>
-      </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default BusyEmployeesCard
+export default BusyEmployeesCard;
